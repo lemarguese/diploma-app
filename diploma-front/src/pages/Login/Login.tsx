@@ -3,10 +3,13 @@ import {BaseSyntheticEvent, useCallback, useState} from "react";
 import {ILogin} from "../../utils/types/auth.types";
 import {login} from "../../api/auth/auth";
 import {useNavigate} from "react-router";
+import {useAppDispatch} from "../../hooks/useAppSelector";
+import {setUser} from "../../store/user/slice";
 
 const Login = () => {
     const [data, setData] = useState<ILogin>({email: '', password: ''})
     const router = useNavigate();
+    const dispatch = useAppDispatch();
 
     const changeData = useCallback((name: keyof ILogin) => {
         return (ev: BaseSyntheticEvent) => {
@@ -17,8 +20,13 @@ const Login = () => {
     const loginHandler = useCallback(async () => {
         try {
             const res = await login(data)
-            if (res.email) router('/')
-        } catch (e) {}
+            if (res.status) {
+                dispatch(setUser(res.data))
+                router('/')
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }, [data])
 
     return <div className="login">
@@ -33,7 +41,8 @@ const Login = () => {
                 <input className="login__input" onChange={changeData('password')} placeholder="Введите пароль"/>
             </div>
             <button className="login__submit__btn" onClick={loginHandler}>Войти</button>
-            <p className="login__no__account">У вас нет аккаунта? <span className="login__create__account">Создать аккаунт</span>
+            <p className="login__no__account">У вас нет аккаунта? <span className="login__create__account"
+                                                                        onClick={() => router('/register')}>Создать аккаунт</span>
             </p>
         </div>
     </div>

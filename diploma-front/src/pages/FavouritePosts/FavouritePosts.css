@@ -1,6 +1,6 @@
 .favourite__posts {
     max-width: 1600px;
-    margin: 0 auto;
+    margin: 74px auto 0 auto;
 }
 
 .favourite__posts__title {
@@ -14,4 +14,15 @@
     flex-direction: column;
     gap: 119px;
     margin-top: 65px;
+}
+
+@media (max-width: 1024px) {
+    .favourite__posts__title {
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    .favourite__posts__list {
+        margin-top: 30px;
+    }
 }

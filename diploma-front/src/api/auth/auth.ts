@@ -3,10 +3,10 @@ import {IRes} from "../../utils/types/api.types";
 import instance from "../../axios/axios.instance";
 import {IUser} from "../../utils/types/user.types";
 
-export const register = async (data: IRegister): Promise<IRes> => {
+export const register = async (data: IRegister): Promise<IRes<IUser>> => {
     return (await instance.post('/user', data)).data
 }
 
-export const login = async (data: ILogin): Promise<IUser> => {
+export const login = async (data: ILogin): Promise<IRes<IUser>> => {
     return (await instance.post('/auth/login', data)).data
 }

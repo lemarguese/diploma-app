@@ -2,9 +2,14 @@ import './Register.css'
 import {BaseSyntheticEvent, useCallback, useState} from "react";
 import {IRegister} from "../../utils/types/auth.types";
 import {register} from "../../api/auth/auth";
+import {useNavigate} from "react-router";
+import {useAppDispatch} from "../../hooks/useAppSelector";
+import {setUser} from "../../store/user/slice";
 
 const Register = () => {
     const [data, setData] = useState<IRegister>({fullName: '', email: '', password: ''})
+    const router = useNavigate()
+    const dispatch = useAppDispatch()
 
     const setInputData = useCallback((name: keyof IRegister) => {
         return (event: BaseSyntheticEvent) => {
@@ -13,12 +18,20 @@ const Register = () => {
     }, [])
 
     const registerHandler = useCallback(async () => {
-        await register(data)
+        try {
+            const res = await register(data)
+            if (res.status) {
+                dispatch(setUser(res.data))
+                router('/')
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }, [data])
 
     return <div className="register">
         <div className="register__area">
-            <h2 className="register__label">Войти</h2>
+            <h2 className="register__label">Регистрация</h2>
             <div className="register__field">
                 <p className="register__input__label">Имя и Фамилия</p>
                 <input className="register__input" onChange={setInputData('fullName')}

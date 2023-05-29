@@ -1,3 +1,5 @@
-export interface IRes {
-    message: string
+export interface IRes<T> {
+    message: string,
+    data: T,
+    status: boolean
 }
