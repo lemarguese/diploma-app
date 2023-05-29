@@ -17,5 +17,6 @@ export default new mongoose.Schema({
     role: {
         type: String,
         default: 'member'
-    }
-})
+    },
+    likedPosts: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}]
+}, {versionKey: false})

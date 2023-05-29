@@ -1,23 +1,31 @@
 import './Post.css';
 import PostImage from "../../shared/images/home_background.jpg";
+import {FC} from "react";
 
-const Post = () => {
+interface IProps {
+    title: string,
+    description: string,
+    likes: number,
+    comments: string[]
+}
+
+const Post: FC<IProps> = ({title, description, likes, comments= []}) => {
     return <div className="post__item">
         <div className="post__item__image__block">
             <img src={PostImage} alt="" className="post__item__image"/>
         </div>
         <div className="post__item__info">
-            <h2 className="post__item__info__title">Об основах тела</h2>
-            <p className="post__item__info__content">Вы когда-нибудь задумывались над тем, что делают все эти сложные системы организма? В этих статьях «Основы тела» объясняется, как работает каждая система, часть и процесс организма. Используйте эту медицинскую библиотеку, чтобы узнать об основах анатомии человека, о том, как все это работает и что происходит, когда что-то идет не так.</p>
+            <h2 className="post__item__info__title">{title}</h2>
+            <p className="post__item__info__content">{description}</p>
             <div className="post__item__info__footer">
                 <div className="post__item__reactions">
                     <div className="post__item__reaction">
                         <img className="post__item__reaction__icon" src="/shared/icons/like_icon.svg"/>
-                        <p className="post__item__reaction__count">23</p>
+                        <p className="post__item__reaction__count">{likes}</p>
                     </div>
                     <div className="post__item__reaction">
                         <img className="post__item__reaction__icon" src="/shared/icons/comment_icon.svg"/>
-                        <p className="post__item__reaction__count">4</p>
+                        <p className="post__item__reaction__count">{comments.length}</p>
                     </div>
                     <div className="post__item__reaction">
                         <img className="post__item__reaction__icon" src="/shared/icons/eye_icon.svg"/>

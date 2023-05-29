@@ -1,16 +1,20 @@
-import express from 'express'
+import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+
 const app = express();
 import UserRouter from './routes/user/route'
 import mongoose from 'mongoose'
 import UserModel from "./db/models/user.model";
 import AuthRouter from './routes/auth/route'
+import PostRouter from './routes/post/route'
 import {auth} from "./middleware/jwt";
+import PostModel from "./db/models/post.model";
 
 app.use(bodyParser.json())
 app.use(cors())
 
+app.use('/posts', PostRouter)
 app.use('/auth', AuthRouter)
 app.use('/user', auth, UserRouter)
 const dev = false
