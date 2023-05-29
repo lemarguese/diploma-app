@@ -1,0 +1,17 @@
+.favourite__posts {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.favourite__posts__title {
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 57px;
+}
+
+.favourite__posts__list {
+    display: flex;
+    flex-direction: column;
+    gap: 119px;
+    margin-top: 65px;
+}

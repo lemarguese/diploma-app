@@ -1,4 +1,5 @@
-/diploma-app/node_modules
+/diploma-front/node_modules
 .idea
-/diploma-app/.idea
+/diploma-front/.idea
 .DS_Store
+/diploma-backend/node_modules
