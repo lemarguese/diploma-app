@@ -8,3 +8,10 @@ export interface IPost {
     //todo array of comments
     comments: string[]
 }
+
+export interface IPostCreation {
+    title: string,
+    description: string,
+    photo: string,
+    video: string
+}

@@ -16,5 +16,5 @@ export default new mongoose.Schema({
         type: String
     },
     likes: {type: Number, default: 0},
-    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
+    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: []}]
 }, {versionKey: false, timestamps: true})
