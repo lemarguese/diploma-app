@@ -2,17 +2,27 @@ import './Article.css'
 import BackIcon from '../../shared/icons/left_icon.svg'
 import ArticleImg from '../../shared/images/topic_youngster.jpg'
 import Comment from "../../components/Comment/Comment";
-import {useAppSelector} from "../../hooks/useAppSelector";
+// import {useAppSelector} from "../../hooks/useAppSelector";
 import SuggestPost from "../../components/SuggestPost/SuggestPost";
+import {useParams} from "react-router";
+import {useEffect, useState} from "react";
+import {getPostById} from "../../api/post/post";
+import {IPost} from "../../utils/types/post.types";
 
 const Article = () => {
 
-    const user = useAppSelector(state => state.user)
+    const {id} = useParams()
+    const [post, setPost] = useState<IPost>()
+    // const user = useAppSelector(state => state.user)
 
-    return <div className="article">
+    useEffect(() => {
+        if (id) getPostById(id).then(res => setPost(res.data))
+    }, [id])
+
+    return post ? <div className="article">
         <div className="article__title__block">
             <img src={BackIcon} alt="" className="article__back__icon"/>
-            <h4 className="article__title__text">Об основах тела</h4>
+            <h4 className="article__title__text">{post.title}</h4>
         </div>
         <div className="article__body">
             <div className="article__main">
@@ -20,11 +30,11 @@ const Article = () => {
                     <div className="article__statistics">
                         <div className="article__stat__item">
                             <img src="/shared/icons/like_icon.svg" alt="" className="article__stat__like"/>
-                            <p className="article__stat__text">0</p>
+                            <p className="article__stat__text">{post.likes}</p>
                         </div>
                         <div className="article__stat__item">
                             <img src="/shared/icons/comment_icon.svg" alt="" className="article__stat__comment"/>
-                            <p className="article__stat__text">0</p>
+                            <p className="article__stat__text">{post.comments.length}</p>
                         </div>
                         <div className="article__stat__item">
                             <img src="/shared/icons/eye_icon.svg" alt="" className="article__stat__visited"/>
@@ -34,36 +44,34 @@ const Article = () => {
                     <img src={ArticleImg} alt="" className="article__label__image"/>
                 </div>
                 <div className="article__information">
-                    <h4 className="article__information__title">Что такое иммунная система?</h4>
-                    <br/>
-                    <p className="article__information__content">Иммунная система – это защита организма от инфекций.
-                        Иммунная система (ih-MYOON) атакует микробы и
-                        помогает нам оставаться здоровыми.</p>
-                    <br/>
-                    <h4 className="article__information__title">Каковы части иммунной системы?</h4>
-                    <br/>
-                    <p className="article__information__content">
-                        Многие клетки и органы работают вместе, чтобы защитить тело. Лейкоциты, также называемые
-                        лейкоцитами
-                        (LOO-kuh-sytes), играют важную роль в иммунной системе.<br/><br/>
-                        Некоторые типы лейкоцитов, называемые фагоцитами (FAH-guh-sytes), пережевывают вторгшиеся
-                        организмы.
-                        Другие, называемые лимфоцитами (LIM-fuh-sytes), помогают организму запоминать захватчиков и
-                        уничтожать их.<br/><br/>
-                        Одним из видов фагоцитов являются нейтрофилы (NOO-truh-fil), которые борются с бактериями. Когда
-                        у
-                        кого-то может быть бактериальная инфекция, врачи могут назначить анализ крови, чтобы увидеть, не
-                        вызвала ли она в организме большое количество нейтрофилов. Другие типы фагоцитов выполняют свою
-                        работу, чтобы убедиться, что организм реагирует на захватчиков.
-                    </p>
+                    {/*<h4 className="article__information__title">Что такое иммунная система?</h4>*/}
+                    {/*<br/>*/}
+                    <p className="article__information__content">{post.description}</p>
+                    {/*<br/>*/}
+                    {/*<h4 className="article__information__title">Каковы части иммунной системы?</h4>*/}
+                    {/*<br/>*/}
+                    {/*<p className="article__information__content">*/}
+                    {/*    Многие клетки и органы работают вместе, чтобы защитить тело. Лейкоциты, также называемые*/}
+                    {/*    лейкоцитами*/}
+                    {/*    (LOO-kuh-sytes), играют важную роль в иммунной системе.<br/><br/>*/}
+                    {/*    Некоторые типы лейкоцитов, называемые фагоцитами (FAH-guh-sytes), пережевывают вторгшиеся*/}
+                    {/*    организмы.*/}
+                    {/*    Другие, называемые лимфоцитами (LIM-fuh-sytes), помогают организму запоминать захватчиков и*/}
+                    {/*    уничтожать их.<br/><br/>*/}
+                    {/*    Одним из видов фагоцитов являются нейтрофилы (NOO-truh-fil), которые борются с бактериями. Когда*/}
+                    {/*    у*/}
+                    {/*    кого-то может быть бактериальная инфекция, врачи могут назначить анализ крови, чтобы увидеть, не*/}
+                    {/*    вызвала ли она в организме большое количество нейтрофилов. Другие типы фагоцитов выполняют свою*/}
+                    {/*    работу, чтобы убедиться, что организм реагирует на захватчиков.*/}
+                    {/*</p>*/}
                 </div>
             </div>
             <div className="article__suggested__posts">
                 <h4 className="article__suggested__title">Возможно, вам будет интересно:</h4>
                 <div className="article__suggested__list">
-                    <SuggestPost image={ArticleImg} title="Название статьи" content="Описание: 5-10 cлов" />
-                    <SuggestPost image={ArticleImg} title="Название статьи" content="Описание: 5-10 cлов" />
-                    <SuggestPost image={ArticleImg} title="Название статьи" content="Описание: 5-10 cлов" />
+                    <SuggestPost image={ArticleImg} title="Название статьи" content="Описание: 5-10 cлов"/>
+                    <SuggestPost image={ArticleImg} title="Название статьи" content="Описание: 5-10 cлов"/>
+                    <SuggestPost image={ArticleImg} title="Название статьи" content="Описание: 5-10 cлов"/>
                 </div>
             </div>
         </div>
@@ -79,7 +87,7 @@ const Article = () => {
                 <button className="article__comment__submit">Отправить</button>
             </div>
         </div>
-    </div>
+    </div> : <></>
 }
 
 export default Article;

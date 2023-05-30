@@ -1,3 +1,6 @@
+import {CategoryAudition} from "./category.types";
+import {IComment} from "./comment.types";
+
 export interface IPost {
     _id: string,
     title: string,
@@ -5,13 +8,13 @@ export interface IPost {
     photo: string,
     video: string,
     likes: number,
-    //todo array of comments
-    comments: string[]
+    comments: IComment[]
 }
 
 export interface IPostCreation {
     title: string,
     description: string,
     photo: string,
-    video: string
+    video: string,
+    auditory: CategoryAudition
 }

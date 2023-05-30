@@ -1,14 +1,13 @@
 import {IUserRole} from "../types/auth.types";
+import {responseWrapper} from "../utils/utils";
 
 export const permission = (permittedRoles: IUserRole[]) => {
     return (req: any, res: any, next: () => any) => {
-        // console.log(req.body, res.locals)
-        // const { role } = res;
-        // if (role && permittedRoles.includes(role)) {
-        //     next();
-        // } else {
-        //     res.status(403).send('Access denied');
-        // }
-        next()
+        const {role} = res.locals.user;
+        if (role && permittedRoles.includes(role)) {
+            next();
+        } else {
+            res.status(403).json(responseWrapper(null, 'Access denied', false));
+        }
     };
 }

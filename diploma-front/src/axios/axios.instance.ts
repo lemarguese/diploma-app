@@ -9,7 +9,7 @@ instance.interceptors.response.use((res) => {
     enqueueSnackbar(res.data.message)
     return res;
 }, (err) => {
-    enqueueSnackbar(err)
+    enqueueSnackbar(err.response.data.message)
 })
 
 export default instance;

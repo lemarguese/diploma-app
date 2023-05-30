@@ -9,7 +9,13 @@ export const create = async (req: any, res: any) => {
 
 export const get = async (req: any, res: any) => {
     const posts = await PostService.getPosts();
-    res.status(200).json(responseWrapper(posts, 'success', true))
+    res.status(200).json(responseWrapper(posts, 'Successfully got all posts.', true))
+}
+
+export const getById = async (req: any, res: any) => {
+    const post = await PostService.getPostById(req.params.postId);
+    if (!post) return res.status(400).json(responseWrapper(null, 'No post by such ID.', false))
+    res.status(200).json(responseWrapper(post, `Successfully get ${req.params.postId} post.`, true))
 }
 
 export const like = async (req: any, res: any) => {

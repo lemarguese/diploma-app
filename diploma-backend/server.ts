@@ -1,33 +1,33 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import * as dotenv from 'dotenv'
 
 const app = express();
 import UserRouter from './routes/user/route'
 import mongoose from 'mongoose'
-import UserModel from "./db/models/user.model";
 import AuthRouter from './routes/auth/route'
 import PostRouter from './routes/post/route'
+import CategoryRouter from './routes/category/route';
 import {auth} from "./middleware/jwt";
-import PostModel from "./db/models/post.model";
+import {setup} from "./utils/setup";
 
 app.use(bodyParser.json())
 app.use(cors())
+dotenv.config()
 
-app.use('/posts', PostRouter)
+app.use('/categories', CategoryRouter)
+app.use('/posts', auth, PostRouter)
 app.use('/auth', AuthRouter)
-app.use('/user', auth, UserRouter)
-const dev = false
+app.use('/users', auth, UserRouter)
 
 app.listen(4000, 'localhost', async () => {
     console.log('Backend connected')
-    mongoose.connect('mongodb://localhost:27017/diploma').then(r => {
+    mongoose.connect(process.env.MONGODB_URI!).then(r => {
         console.log('Database connected')
     })
 
-    if (dev) {
-        const res = await new UserModel({email: 'test@test.com', password: '123456', role: 'admin'})
-        console.log(res)
-        await res.save()
+    if (process.env.INITIAL_MODE!) {
+        await setup()
     }
 })

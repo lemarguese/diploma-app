@@ -57,6 +57,7 @@
 }
 
 .header__user__avatar {
+    cursor: pointer;
     background-color: #EAB79B;
     width: 65px;
     height: 65px;
@@ -91,12 +92,6 @@
     z-index: 98;
 }
 
-.visible {
-    visibility: visible;
-    backdrop-filter: blur(2px);
-    transition: all linear .15s;
-}
-
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -125,6 +120,46 @@
     max-width: 400px;
     width: 400px;
     transition: all linear .15s;
+}
+
+.modal__window {
+    visibility: hidden;
+    opacity: 0;
+    top: 125px;
+    position: absolute;
+    z-index: 99;
+    max-width: 385px;
+    max-height: 460px;
+    background-color: #FFF;
+    border-radius: 20px;
+    right: 75px;
+    padding: 18px 32px 0 32px;
+    transition: all linear .15s;
+}
+
+.modal__window__username {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 48px;
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: all linear .15s;
+}
+
+.modal__window__route {
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 48px;
+    border-bottom: 1px solid #000;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+.modal__window__route:last-child {
+    border-bottom: none;
 }
 
 @media (max-width: 1440px) {
@@ -160,6 +195,9 @@
         font-size: 16px;
     }
 
+    .modal__window {
+        right: 35px;
+    }
 }
 
 @media (max-width: 500px) {
@@ -169,5 +207,10 @@
 
     .header__login__btn, .header__mobile__search {
         display: none;
+    }
+
+    .modal__window__route, .modal__window__username {
+        font-size: 20px;
+        line-height: 30px;
     }
 }

@@ -21,7 +21,9 @@ const Register = () => {
         try {
             const res = await register(data)
             if (res.status) {
-                dispatch(setUser(res.data))
+                localStorage.setItem('accessToken', res.data.accessToken)
+                localStorage.setItem('user', JSON.stringify(res.data.user))
+                dispatch(setUser(res.data.user))
                 router('/')
             }
         } catch (e) {

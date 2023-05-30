@@ -7,9 +7,21 @@ export const getPosts = async (): Promise<IRes<IPost[]>> => {
 }
 
 export const likeAPost = async (data: IPost): Promise<IRes<IPost[]>> => {
-    return (await instance.post('/posts/like', data)).data
+    return (await instance.post('/posts/like', data, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+    })).data
 }
 
 export const createPost = async (data: IPostCreation): Promise<IRes<IPost>> => {
-    return (await instance.post('/posts', data)).data
+    return (await instance.post('/posts', data, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+    })).data
+}
+
+export const getPostById = async (postId: string): Promise<IRes<IPost>> => {
+    return (await instance.get(`/posts/${postId}`)).data
 }

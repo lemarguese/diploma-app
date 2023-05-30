@@ -21,7 +21,9 @@ const Login = () => {
         try {
             const res = await login(data)
             if (res.status) {
-                dispatch(setUser(res.data))
+                localStorage.setItem('accessToken', res.data.accessToken)
+                localStorage.setItem('user', JSON.stringify(res.data.user))
+                dispatch(setUser(res.data.user))
                 router('/')
             }
         } catch (e) {
@@ -38,7 +40,8 @@ const Login = () => {
             </div>
             <div className="login__field">
                 <p className="login__input__label">Пароль</p>
-                <input className="login__input" type="password" onChange={changeData('password')} placeholder="Введите пароль"/>
+                <input className="login__input" type="password" onChange={changeData('password')}
+                       placeholder="Введите пароль"/>
             </div>
             <button className="login__submit__btn" onClick={loginHandler}>Войти</button>
             <p className="login__no__account">У вас нет аккаунта? <span className="login__create__account"

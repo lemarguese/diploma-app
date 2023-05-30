@@ -1,12 +1,13 @@
-import {FC, useState} from "react";
+import {FC, ReactChildren, ReactNode, useState} from "react";
 import './Accordion.css';
 
 interface IProps {
     title: string,
-    description: string
+    description: string,
+    children: ReactNode
 }
 
-const Accordion: FC<IProps> = ({title, description}) => {
+const Accordion: FC<IProps> = ({title, description, children}) => {
     const [expand, setExpand] = useState<boolean>(false)
 
     return <div className="accordion__item">
@@ -18,6 +19,7 @@ const Accordion: FC<IProps> = ({title, description}) => {
         </div>
         <div className={`accordion__expand__block ${expand ? 'expand' : ''}`}>
             <p className="accordion__expand__text">{description}</p>
+            {children}
         </div>
     </div>
 }

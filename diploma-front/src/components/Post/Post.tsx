@@ -1,12 +1,13 @@
 import './Post.css';
 import PostImage from "../../shared/images/home_background.jpg";
 import {FC} from "react";
+import {IComment} from "../../utils/types/comment.types";
 
 interface IProps {
     title: string,
     description: string,
     likes: number,
-    comments: string[]
+    comments: IComment[]
 }
 
 const Post: FC<IProps> = ({title, description, likes, comments= []}) => {

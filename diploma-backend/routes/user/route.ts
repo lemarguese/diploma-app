@@ -1,9 +1,7 @@
 import * as express from 'express';
-import {create, get} from "./controller";
+import {get} from "./controller";
 import {permission} from "../../middleware/permit";
 const router = express.Router();
 
-router.get('/', [permission(['admin'])], get)
-router.post('/', [permission(['admin'])], create)
-
+router.get('/:userId', [permission(['admin'])], get)
 export default router;

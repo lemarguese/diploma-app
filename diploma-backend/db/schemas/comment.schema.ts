@@ -9,5 +9,9 @@ export default new mongoose.Schema({
     text: {
         type: String,
         required: true
+    },
+    upvote: {
+        type: Number,
+        default: 0
     }
 }, {timestamps: true, versionKey: false})

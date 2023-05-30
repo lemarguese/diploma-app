@@ -12,6 +12,10 @@ export default new mongoose.Schema({
     photo: {
         type: String
     },
+    auditory: {
+        type: String,
+        required: true
+    },
     video: {
         type: String
     },

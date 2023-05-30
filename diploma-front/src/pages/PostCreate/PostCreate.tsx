@@ -5,7 +5,14 @@ import {createPost} from "../../api/post/post";
 
 const PostCreate = () => {
 
-    const [newPost, setNewPost] = useState<IPostCreation>({title: '', description: '', photo: '', video: ''})
+    const [newPost, setNewPost] = useState<IPostCreation>({
+        title: '',
+        description: '',
+        photo: '',
+        video: '',
+        auditory: 'parent'
+    })
+
     const addData = (name: keyof IPostCreation) => (event: BaseSyntheticEvent) => {
         setNewPost(prev => ({...prev, [name]: event.target.value}))
     }
@@ -32,6 +39,14 @@ const PostCreate = () => {
                 <textarea id="description" className="creation__input second__input"
                           placeholder="Описание статьи"
                           onChange={addData('description')}/>
+            </div>
+            <div className="creation__item">
+                <label htmlFor="city" className="creation__label creation__select__label">Выберите категорию:</label>
+                <select name="city" id="city" className="creation__input creation__select"
+                        onChange={addData('auditory')}>
+                    <option value="parent" selected>Parent</option>
+                    <option value="young">Youngster</option>
+                </select>
             </div>
             <div className="creation__item">
                 <label htmlFor="photo" className="creation__label">Добавьте фото:</label>

@@ -40,7 +40,7 @@
     line-height: 60px;
 }
 
-.topics__board__content {
+.topics__board__content, .topic__item {
     font-size: 24px;
 }
 
@@ -55,6 +55,11 @@
     background-color: #FFF;
     border-radius: 30px;
     padding: 25px 77px 25px 48px;
+}
+
+.topics__articles {
+    margin-top: 15px;
+    padding-left: 30px;
 }
 
 @media (max-width: 1024px) {

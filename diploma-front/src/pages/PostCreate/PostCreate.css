@@ -82,6 +82,17 @@
     margin-top: 72px;
 }
 
+.creation__select {
+    cursor: pointer;
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 30px;
+    font-size: 26px;
+    padding: 15px 0;
+    border-right: 16px solid transparent;
+    text-indent: 20px;
+}
+
 @media (max-width: 1024px) {
     .creation__item {
         flex-direction: column;
