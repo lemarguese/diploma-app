@@ -43,7 +43,7 @@ const Register = () => {
             </div>
             <div className="register__field">
                 <p className="register__input__label">Пароль</p>
-                <input className="register__input" onChange={setInputData('password')} placeholder="Введите пароль"/>
+                <input className="register__input" type="password" onChange={setInputData('password')} placeholder="Введите пароль"/>
             </div>
         </div>
         <button className="register__submit__btn" onClick={registerHandler}>Создать аккаунт</button>
