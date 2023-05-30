@@ -1,7 +1,9 @@
 import './PostCreate.css'
-import {BaseSyntheticEvent, useCallback, useState} from "react";
+import {BaseSyntheticEvent, useCallback, useEffect, useState} from "react";
 import {IPostCreation} from "../../utils/types/post.types";
 import {createPost} from "../../api/post/post";
+import {ICategory} from "../../utils/types/category.types";
+import {getTopics} from "../../api/category/category";
 
 const PostCreate = () => {
 
@@ -10,12 +12,17 @@ const PostCreate = () => {
         description: '',
         photo: '',
         video: '',
-        auditory: 'parent'
+        category: ''
     })
+    const [categories, setCategories] = useState<ICategory[]>([])
 
     const addData = (name: keyof IPostCreation) => (event: BaseSyntheticEvent) => {
         setNewPost(prev => ({...prev, [name]: event.target.value}))
     }
+
+    useEffect(() => {
+        getTopics().then(res => setCategories(res.data))
+    }, [])
 
     const submitData = useCallback(async () => {
         try {
@@ -43,9 +50,8 @@ const PostCreate = () => {
             <div className="creation__item">
                 <label htmlFor="city" className="creation__label creation__select__label">Выберите категорию:</label>
                 <select name="city" id="city" className="creation__input creation__select"
-                        onChange={addData('auditory')}>
-                    <option value="parent" selected>Parent</option>
-                    <option value="young">Youngster</option>
+                        onChange={addData('category')}>
+                    {categories.map(el => <option value={el.title}>{el.title}</option>)}
                 </select>
             </div>
             <div className="creation__item">

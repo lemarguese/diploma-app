@@ -1,10 +1,9 @@
 import {IComment} from "./comment.types";
-import {CAuditory} from "./category.types";
 
 export interface IPost {
     _id: string,
     title: string,
-    auditory: CAuditory,
+    category: string,
     description: string,
     photo: string,
     video: string,

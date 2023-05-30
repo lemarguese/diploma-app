@@ -12,7 +12,7 @@ export default new mongoose.Schema({
     photo: {
         type: String
     },
-    auditory: {
+    category: {
         type: String,
         required: true
     },

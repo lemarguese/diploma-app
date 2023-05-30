@@ -1,6 +1,7 @@
 import {ICategory} from "../../types/category.types";
 import CategoryModel from "../../db/models/category.model";
 import {IPost} from "../../types/post.types";
+import mongoose from "mongoose";
 
 export default class CategoryService {
     static async add(data: ICategory) {
@@ -19,9 +20,9 @@ export default class CategoryService {
     }
 
     static async addPostToCategory(post: IPost) {
-        await CategoryModel.updateMany({auditory: post.auditory}, {
+        await CategoryModel.findOneAndUpdate({title: post.category}, {
             $push: {
-                posts: [post]
+                posts: post
             }
         })
     }

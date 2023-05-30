@@ -5,6 +5,7 @@ import CategoryService from "../category/service";
 
 export default class PostService {
     static async create(data: IPost) {
+        console.log(data)
         const post = await new PostModel(data);
         await post.save();
         await CategoryService.addPostToCategory(post)

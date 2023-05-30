@@ -1,4 +1,3 @@
-import {CategoryAudition} from "./category.types";
 import {IComment} from "./comment.types";
 
 export interface IPost {
@@ -16,5 +15,5 @@ export interface IPostCreation {
     description: string,
     photo: string,
     video: string,
-    auditory: CategoryAudition
+    category: string
 }
