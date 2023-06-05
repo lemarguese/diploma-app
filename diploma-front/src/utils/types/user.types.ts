@@ -1,6 +1,7 @@
 export type IUserRole = null | 'admin' | 'member'
 
 export interface IUser {
+    _id?: string,
     fullName: string,
     email: string,
     password: string,

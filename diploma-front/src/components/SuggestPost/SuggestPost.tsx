@@ -1,4 +1,3 @@
-import ArticleImg from "../../shared/images/topic_youngster.jpg";
 import './SuggestPost.css'
 import {FC} from "react";
 

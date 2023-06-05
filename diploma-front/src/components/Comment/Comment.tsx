@@ -7,19 +7,35 @@ import Ava from '../../shared/images/topic_youngster.jpg'
 import {FC} from "react";
 
 interface IProps {
+    _id: string,
     text: string,
     upvotes: number,
     author: string,
     time: string,
-    isUser?: boolean
+    isUser?: boolean,
+    vote: (commentId: string, voteNumber: -1 | 1) => void,
+    isUserUpvoted: boolean,
+    deleteComment: () => void
 }
 
-const Comment: FC<IProps> = ({text, upvotes, isUser = false, author, time}) => {
+const Comment: FC<IProps> = ({
+                                 _id,
+                                 text,
+                                 upvotes,
+                                 deleteComment,
+                                 isUserUpvoted,
+                                 isUser = false,
+                                 author,
+                                 time,
+                                 vote
+                             }) => {
     return <div className="comment">
         <div className="comment__rate__block">
-            <img src={RatePlusIcon} alt="" className="comment__rate__plus"/>
+            <img src={RatePlusIcon} alt="" className="comment__rate__minus"
+                 onClick={!isUserUpvoted ? () => vote(_id, 1) : undefined}/>
             <p className="comment__rating">{upvotes}</p>
-            <img src={RateMinusIcon} alt="" className="comment__rate__minus"/>
+            <img src={RateMinusIcon} alt="" className="comment__rate__minus"
+                 onClick={!isUserUpvoted ? () => vote(_id, -1) : undefined}/>
         </div>
         <div className="comment__info">
             <div className="comment__item">
@@ -29,7 +45,7 @@ const Comment: FC<IProps> = ({text, upvotes, isUser = false, author, time}) => {
                     {isUser && <p className="comment__you">Вы</p>}
                     <p className="comment__timestamp">{time}</p>
                 </div>
-                <div className="comment__reply">
+                <div className="comment__reply" onClick={!isUser ? undefined : deleteComment}>
                     <img src={!isUser ? ReplyIcon : DeleteIcon} alt="reply icon" className="comment__reply__icon"/>
                     <p className="comment__reply__text">{!isUser ? 'Ответить' : 'Удалить'}</p>
                 </div>

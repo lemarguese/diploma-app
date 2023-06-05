@@ -19,6 +19,7 @@ export default new mongoose.Schema({
     video: {
         type: String
     },
-    likes: {type: Number, default: 0},
-    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: []}]
+    liked: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', default: []}],
+    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: []}],
+    viewed: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', default: []}]
 }, {versionKey: false, timestamps: true})

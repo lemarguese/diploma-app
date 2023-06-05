@@ -1,8 +1,9 @@
 import './Header.css'
 import {useNavigate} from "react-router";
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppSelector";
-import {useCallback, useState} from "react";
+import {useCallback, useRef, useState} from "react";
 import {setUser} from "../../store/user/slice";
+import {useSearch} from "../../hooks/useSearch";
 
 const Header = () => {
 
@@ -10,6 +11,9 @@ const Header = () => {
     const router = useNavigate();
     const [showSidebar, setShowSidebar] = useState<boolean>(false)
     const [showCabinet, setShowCabinet] = useState<boolean>(false);
+    const [searchText, setText] = useState<string>()
+
+    const [result] = useSearch(searchText)
     const dispatch = useAppDispatch()
 
     const logout = useCallback(() => {
@@ -39,7 +43,13 @@ const Header = () => {
                 <p className="header__route__text" onClick={() => router('/topic/parent')}>Для Родителей</p>
                 <p className="header__route__text" onClick={() => router('/topic/young')}>Для Подростков</p>
                 <p className="header__route__text" onClick={() => router('/help')}>Помощь</p>
-                <input type="text" placeholder="Поиск" className="header__search"/>
+                <div className='header__search__block'>
+                    <input type="text" placeholder="Поиск" className="header__search"
+                           onChange={e => setText(e.target.value)}/>
+                    <div className='header__search__dropdown'>
+                        {result.map(text => <p className='dropdown__item'>{text}</p>)}
+                    </div>
+                </div>
                 <img src="/shared/icons/search_icon.svg" className="header__mobile__search"/>
                 {user?.fullName
                     ? <div className="header__user__avatar" tabIndex={-1}

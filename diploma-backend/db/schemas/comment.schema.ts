@@ -10,8 +10,10 @@ export default new mongoose.Schema({
         type: String,
         required: true
     },
-    upvote: {
-        type: Number,
-        default: 0
-    }
+    upvote: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+        default: []
+    }]
 }, {timestamps: true, versionKey: false})

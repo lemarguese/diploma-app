@@ -4,24 +4,56 @@ import ArticleImg from '../../shared/images/topic_youngster.jpg'
 import Comment from "../../components/Comment/Comment";
 // import {useAppSelector} from "../../hooks/useAppSelector";
 import SuggestPost from "../../components/SuggestPost/SuggestPost";
-import {useParams} from "react-router";
-import {useEffect, useState} from "react";
+import {useParams, useNavigate} from "react-router";
+import {useCallback, useEffect, useState} from "react";
 import {getPostById} from "../../api/post/post";
 import {IPost} from "../../utils/types/post.types";
+import {comment, deleteComment, upvoteForComment} from "../../api/comment/comment";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 const Article = () => {
 
     const {id} = useParams()
     const [post, setPost] = useState<IPost>()
-    // const user = useAppSelector(state => state.user)
+    const [commentText, setCommentText] = useState<string>('')
+    const user = useAppSelector(state => state.user.user)
+    const router = useNavigate();
 
     useEffect(() => {
-        if (id) getPostById(id).then(res => setPost(res.data))
-    }, [id])
+        if (id && user) fetchData()
+    }, [id, user])
+
+    useEffect(() => {
+        if (post) {
+
+        }
+    })
+
+    const fetchData = useCallback(() => {
+        if (id && user._id) getPostById(id, user._id).then(res => setPost(res.data))
+    }, [id, user])
+
+    const createComment = useCallback(async () => {
+        if (user._id && post?._id) await comment({userId: user._id, postId: post?._id, commentText}).then(r => {
+            fetchData()
+        })
+    }, [user, post, commentText])
+
+    const upvoteTheComment = useCallback(async (commentId: string) => {
+        if (user._id) await upvoteForComment({commentId, userId: user._id}).then(r => {
+            fetchData()
+        })
+    }, [user])
+
+    const deleteTheComment = useCallback(async (commentId: string) => {
+        if (post) await deleteComment({postId: post._id, commentId}).then(r => {
+            fetchData()
+        })
+    }, [post])
 
     return post ? <div className="article">
         <div className="article__title__block">
-            <img src={BackIcon} alt="" className="article__back__icon"/>
+            <img src={BackIcon} alt="" className="article__back__icon" onClick={() => router(-1)}/>
             <h4 className="article__title__text">{post.title}</h4>
         </div>
         <div className="article__body">
@@ -30,7 +62,7 @@ const Article = () => {
                     <div className="article__statistics">
                         <div className="article__stat__item">
                             <img src="/shared/icons/like_icon.svg" alt="" className="article__stat__like"/>
-                            <p className="article__stat__text">{post.likes}</p>
+                            <p className="article__stat__text">{post.liked.length}</p>
                         </div>
                         <div className="article__stat__item">
                             <img src="/shared/icons/comment_icon.svg" alt="" className="article__stat__comment"/>
@@ -38,7 +70,7 @@ const Article = () => {
                         </div>
                         <div className="article__stat__item">
                             <img src="/shared/icons/eye_icon.svg" alt="" className="article__stat__visited"/>
-                            <p className="article__stat__text">0</p>
+                            <p className="article__stat__text">{post.viewed.length}</p>
                         </div>
                     </div>
                     <img src={ArticleImg} alt="" className="article__label__image"/>
@@ -78,13 +110,28 @@ const Article = () => {
         <div className="article__comments">
             <h4 className="article__comment__title">Комментарии</h4>
             <div className="article__comment__list">
-                <Comment isUser author="John" text="Impressive!" time="1 day ago" upvotes={10}/>
-                <Comment author="Derek" text="That is good!" time="2 day ago" upvotes={20}/>
+                {
+                    post.comments.map(({upvote, author, text, updatedAt, _id}) => <Comment _id={_id}
+                                                                                           vote={upvoteTheComment}
+                                                                                           isUser={author._id === user._id}
+                                                                                           isUserUpvoted={!!upvote.find(upvote => upvote._id === user._id)}
+                                                                                           text={text}
+                                                                                           deleteComment={() => deleteTheComment(_id)}
+                                                                                           upvotes={upvote.length}
+                                                                                           author={author.fullName}
+                                                                                           time={new Date(updatedAt).toLocaleString('en', {
+                                                                                               weekday: 'long',
+                                                                                               year: 'numeric',
+                                                                                               month: '2-digit',
+                                                                                               day: 'numeric'
+                                                                                           })}/>)
+                }
             </div>
             <div className="article__comment__field">
                 <img src={ArticleImg} alt="" className="article__comment__avatar"/>
-                <input type="text" placeholder="Написать комментарий" className="article__comment__input"/>
-                <button className="article__comment__submit">Отправить</button>
+                <input type="text" placeholder="Написать комментарий" value={commentText}
+                       onChange={(e) => setCommentText(e.target.value)} className="article__comment__input"/>
+                <button className="article__comment__submit" onClick={createComment}>Отправить</button>
             </div>
         </div>
     </div> : <></>

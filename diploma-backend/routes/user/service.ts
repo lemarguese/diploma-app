@@ -1,10 +1,11 @@
 import {IUser} from "../../types/auth.types";
 import UserModel from "../../db/models/user.model";
 import mongoose from "mongoose";
+import {IPost} from "../../types/post.types";
 
 export default class UserService {
 
-    static async getUsers () {
+    static async getUsers() {
         return UserModel.find()
     }
 
@@ -23,5 +24,14 @@ export default class UserService {
 
     static async getUserById(id: string) {
         return UserModel.findOne({_id: id as unknown as mongoose.Types.ObjectId})
+    }
+
+    static async addLikedPost(user: IUser, post: IPost) {
+        await UserModel.findOneAndUpdate(
+            {_id: user._id},
+            {
+                $push: {likedPosts: post}
+            }
+        )
     }
 }

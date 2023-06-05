@@ -42,7 +42,7 @@ const Topics = () => {
                 {topics.map(topic => <>
                     <Accordion title={topic.title} description={topic.description}>
                         <ul className="topics__articles">
-                            {topic.posts.map(t => <li className="topic__item" onClick={() => router(`/article/${t._id}`)}>{t.description}</li>)}
+                            {topic.posts.map(t => <li className="topic__item" onClick={() => router(`/article/${t._id}`)}>{t.title}</li>)}
                         </ul>
                     </Accordion>
                 </>)}

@@ -3,7 +3,6 @@ import UserService from "../routes/user/service";
 import {responseWrapper} from "../utils/utils";
 
 export const auth = async (req: any, res: any, next: () => any) => {
-    if (req.baseUrl === '/posts' && req.method === 'GET') return next();
     if (!req.headers.authorization) return res.status(403).send(responseWrapper(null, 'Access denied', false))
 
     const authToken = req.headers.authorization.split(' ')[1]

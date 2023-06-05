@@ -32,7 +32,8 @@ const Router = () => {
             <Route path="/topic/:role" element={<Topics/>}/>
             <Route path="/help" element={<Help/>}/>
             <Route path="/article/:id" element={<Article/>}/>
-            {user.role === 'member' && <Route path="/favourite" element={<FavouritePosts/>}/>}
+            {(user.role === 'member' || user.role === 'admin') &&
+                <Route path="/favourite" element={<FavouritePosts/>}/>}
             {user.role === 'admin' && <Route path="/createPost" element={<PostCreate/>}/>}
             <Route path="*" element={<Navigate to="/"/>}/>
         </Routes>

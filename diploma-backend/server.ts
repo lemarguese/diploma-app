@@ -9,6 +9,7 @@ import mongoose from 'mongoose'
 import AuthRouter from './routes/auth/route'
 import PostRouter from './routes/post/route'
 import CategoryRouter from './routes/category/route';
+import CommentRouter from './routes/comment/route';
 import {auth} from "./middleware/jwt";
 import {setup} from "./utils/setup";
 
@@ -17,9 +18,10 @@ app.use(cors())
 dotenv.config()
 
 app.use('/categories', CategoryRouter)
-app.use('/posts', auth, PostRouter)
+app.use('/posts', PostRouter)
 app.use('/auth', AuthRouter)
 app.use('/users', auth, UserRouter)
+app.use('/comments', auth, CommentRouter)
 
 app.listen(4000, 'localhost', async () => {
     console.log('Backend connected')

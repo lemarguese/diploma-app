@@ -17,6 +17,7 @@
 
 .article__back__icon {
     margin-right: auto;
+    cursor: pointer;
 }
 
 .article__body {

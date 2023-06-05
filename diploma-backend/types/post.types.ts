@@ -1,4 +1,5 @@
 import {IComment} from "./comment.types";
+import {IUser} from "./auth.types";
 
 export interface IPost {
     _id: string,
@@ -7,6 +8,12 @@ export interface IPost {
     description: string,
     photo: string,
     video: string,
-    likes: number,
+    liked: IUser[],
     comments: IComment[]
 }
+
+export interface ILikePost {
+    userId: string,
+    postId: string
+}
+

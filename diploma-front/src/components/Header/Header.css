@@ -34,6 +34,10 @@
     line-height: 36px;
 }
 
+.header__search__block {
+    position: relative;
+}
+
 .header__search {
     font-family: 'Inter';
     font-style: normal;
@@ -50,6 +54,19 @@
 
 .header__search::placeholder {
     color: #979797;
+}
+
+.header__search__dropdown {
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+}
+
+.dropdown__item {
+    background-color: rgba(0, 0, 0, 0.25);
+    padding: 10px 0;
+    text-align: center;
+    cursor: pointer;
 }
 
 .header__mobile__search {
