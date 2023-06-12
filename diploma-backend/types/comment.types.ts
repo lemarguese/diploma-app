@@ -14,5 +14,6 @@ export interface ICommentReq {
 
 export interface IUpvoteComment {
     commentId: string,
-    userId: string
+    userId: string,
+    isUpvote: boolean
 }

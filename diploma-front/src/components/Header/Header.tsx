@@ -63,9 +63,11 @@ const Header = () => {
         <div className={`modal__window ${showCabinet ? 'visible' : ''}`}>
             <h4 className="modal__window__username">{user?.fullName}</h4>
             <p className="modal__window__route">{user?.email}</p>
+            <p className="modal__window__route"
+               onClick={() => router('/createPost')}>Добавить статью</p>
             {user?.role === 'admin' &&
-                <p className="modal__window__route"
-                   onClick={() => router('/createPost')}>Добавить статью</p>}
+                    <p className="modal__window__route"
+                       onClick={() => router('/approvalStatuses')}>Посмотреть заявки на статьи</p>}
             <p className="modal__window__route" onClick={() => router('/favourite')}>Понравившиеся посты</p>
             <p className="modal__window__route" onClick={logout}>Выйти</p>
         </div>

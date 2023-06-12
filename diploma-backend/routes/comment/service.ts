@@ -17,10 +17,10 @@ export default class CommentService {
         }, {new: true});
     }
 
-    static async upvote({commentId, userId}: IUpvoteComment) {
+    static async vote({commentId, userId, isUpvote}: IUpvoteComment) {
         const upvotedUser = await UserService.getUserById(userId);
         return CommentModel.findOneAndUpdate({_id: commentId as unknown as mongoose.Types.ObjectId}, {
-            $push: {upvote: upvotedUser}
+            [isUpvote ? '$push' : '$pull']: {upvote: upvotedUser._id}
         }, {new: true}).populate('upvote')
     }
 

@@ -26,11 +26,11 @@ export default class UserService {
         return UserModel.findOne({_id: id as unknown as mongoose.Types.ObjectId})
     }
 
-    static async addLikedPost(user: IUser, post: IPost) {
+    static async reHandleLikePost(user: IUser, post: IPost, isLike: boolean) {
         await UserModel.findOneAndUpdate(
             {_id: user._id},
             {
-                $push: {likedPosts: post}
+                [isLike ? '$push' : '$pull']: {likedPosts: post._id}
             }
         )
     }

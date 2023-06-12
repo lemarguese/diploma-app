@@ -12,6 +12,8 @@ import {useAppDispatch, useAppSelector} from "../hooks/useAppSelector";
 import {useEffect} from "react";
 import {setUser} from "../store/user/slice";
 import {IUser} from "../utils/types/user.types";
+import Statuses from "../pages/Statuses/Statuses";
+import ProtectedRouter from "./ProtectedRouter";
 
 const Router = () => {
     const {user} = useAppSelector(state => state.user)
@@ -32,9 +34,14 @@ const Router = () => {
             <Route path="/topic/:role" element={<Topics/>}/>
             <Route path="/help" element={<Help/>}/>
             <Route path="/article/:id" element={<Article/>}/>
-            {(user.role === 'member' || user.role === 'admin') &&
-                <Route path="/favourite" element={<FavouritePosts/>}/>}
-            {user.role === 'admin' && <Route path="/createPost" element={<PostCreate/>}/>}
+            <Route path="/favourite"
+                   element={<ProtectedRouter role={user.role} permittedRoles={['member', 'admin']}>
+                       <FavouritePosts/>
+                   </ProtectedRouter>}/>
+            <Route path="/createPost" element={<PostCreate/>}/>
+            <Route path="/approvalStatuses" element={<ProtectedRouter permittedRoles={['admin']} role={user.role}>
+                <Statuses/>
+            </ProtectedRouter>}/>
             <Route path="*" element={<Navigate to="/"/>}/>
         </Routes>
     </BrowserRouter>

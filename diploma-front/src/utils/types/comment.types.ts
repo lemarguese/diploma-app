@@ -16,7 +16,8 @@ export interface ICommentReq {
 
 export interface UpvoteReq {
     commentId: string,
-    userId: string
+    userId: string,
+    isUpvote: boolean
 }
 
 export interface ICommentDelete {

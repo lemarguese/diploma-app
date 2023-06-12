@@ -13,7 +13,7 @@ interface IProps {
     author: string,
     time: string,
     isUser?: boolean,
-    vote: (commentId: string, voteNumber: -1 | 1) => void,
+    vote: (commentId: string, isUpvote: boolean) => void,
     isUserUpvoted: boolean,
     deleteComment: () => void
 }
@@ -32,10 +32,10 @@ const Comment: FC<IProps> = ({
     return <div className="comment">
         <div className="comment__rate__block">
             <img src={RatePlusIcon} alt="" className="comment__rate__minus"
-                 onClick={!isUserUpvoted ? () => vote(_id, 1) : undefined}/>
+                 onClick={!isUserUpvoted ? () => vote(_id, true) : undefined}/>
             <p className="comment__rating">{upvotes}</p>
             <img src={RateMinusIcon} alt="" className="comment__rate__minus"
-                 onClick={!isUserUpvoted ? () => vote(_id, -1) : undefined}/>
+                 onClick={isUserUpvoted ? () => vote(_id, false) : undefined}/>
         </div>
         <div className="comment__info">
             <div className="comment__item">

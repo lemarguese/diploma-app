@@ -39,8 +39,8 @@ const Article = () => {
         })
     }, [user, post, commentText])
 
-    const upvoteTheComment = useCallback(async (commentId: string) => {
-        if (user._id) await upvoteForComment({commentId, userId: user._id}).then(r => {
+    const upvoteTheComment = useCallback(async (commentId: string, isUpvote: boolean) => {
+        if (user._id) await upvoteForComment({commentId, userId: user._id, isUpvote}).then(r => {
             fetchData()
         })
     }, [user])

@@ -13,10 +13,11 @@ interface IProps {
     viewed: number,
     comments: IComment[],
     href: () => void,
-    likePost?: () => void
+    likePost?: () => void,
+    dislikeAPost?: () => void
 }
 
-const Post: FC<IProps> = ({title, description, viewed, userLiked = false, liked, likePost, comments = [], href}) => {
+const Post: FC<IProps> = ({title, description, viewed, userLiked = false, liked, likePost, dislikeAPost, comments = [], href}) => {
     return <div className="post__item">
         <div className="post__item__image__block">
             <img src={PostImage} alt="" className="post__item__image"/>
@@ -29,7 +30,7 @@ const Post: FC<IProps> = ({title, description, viewed, userLiked = false, liked,
                     <div className="post__item__reaction">
                         <img className="post__item__reaction__icon"
                              src={`${userLiked ? LikedIcon : '/shared/icons/like_icon.svg'}`}
-                             onClick={userLiked ? undefined : likePost}/>
+                             onClick={userLiked ? dislikeAPost : likePost}/>
                         <p className="post__item__reaction__count">{liked.length}</p>
                     </div>
                     <div className="post__item__reaction">

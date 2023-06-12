@@ -1,27 +1,23 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './App.css';
 import Router from "./router/Router";
 import './utils/styles/global.styles.css'
 import Footer from "./components/Footer/Footer";
 import {Provider} from "react-redux";
 import {store} from "./store/store";
-import {SnackbarProvider} from "notistack";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return (
         <Provider store={store}>
-            <SnackbarProvider style={{fontSize: 20}}
-                              anchorOrigin={{horizontal: "center", vertical: 'top'}}
-                              maxSnack={5}
-                              variant="info"
-                              autoHideDuration={2000}>
+            <ToastContainer autoClose={1000} />
                 <div className="App">
                     <div className="App__inner">
                         <Router/>
                     </div>
                     <Footer/>
                 </div>
-            </SnackbarProvider>
         </Provider>
     );
 }

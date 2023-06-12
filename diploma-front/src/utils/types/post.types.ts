@@ -7,6 +7,8 @@ export interface IPost {
     description: string,
     photo: string,
     video: string,
+    createdBy: IUser,
+    approved: boolean,
     liked: IUser[],
     comments: IComment[],
     viewed: IUser[]
@@ -17,11 +19,20 @@ export interface IPostCreation {
     description: string,
     photo: string,
     video: string,
-    category: string
+    category: string,
+    createdBy: string,
+    approved?: EApprove
 }
 
 export interface ILikePost {
     userId: string,
-    postId: string
+    postId: string,
+    isLike: boolean
+}
+
+export enum EApprove {
+    NOT_APPROVED,
+    PENDING,
+    APPROVED
 }
 

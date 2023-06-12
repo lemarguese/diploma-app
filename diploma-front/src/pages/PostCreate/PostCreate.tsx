@@ -1,18 +1,23 @@
 import './PostCreate.css'
 import {BaseSyntheticEvent, useCallback, useEffect, useState} from "react";
-import {IPostCreation} from "../../utils/types/post.types";
+import {EApprove, IPostCreation} from "../../utils/types/post.types";
 import {createPost} from "../../api/post/post";
 import {ICategory} from "../../utils/types/category.types";
 import {getTopics} from "../../api/category/category";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import {useNavigate} from "react-router";
 
 const PostCreate = () => {
 
+    const {_id, role} = useAppSelector(state => state.user.user)
+    const router = useNavigate()
     const [newPost, setNewPost] = useState<IPostCreation>({
         title: '',
         description: '',
         photo: '',
         video: '',
-        category: ''
+        category: '',
+        createdBy: '',
     })
     const [categories, setCategories] = useState<ICategory[]>([])
 
@@ -26,11 +31,12 @@ const PostCreate = () => {
 
     const submitData = useCallback(async () => {
         try {
-            await createPost(newPost)
+            if (_id) await createPost({...newPost, createdBy: _id, approved: role === 'admin' ? EApprove.APPROVED : EApprove.PENDING})
+            router('/')
         } catch (err) {
             console.log(err)
         }
-    }, [newPost])
+    }, [newPost, _id])
 
     return <div className="creation">
         <h4 className="creation__title">Добавить статью</h4>

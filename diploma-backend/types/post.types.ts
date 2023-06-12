@@ -8,12 +8,26 @@ export interface IPost {
     description: string,
     photo: string,
     video: string,
+    createdBy: string,
     liked: IUser[],
     comments: IComment[]
 }
 
 export interface ILikePost {
     userId: string,
-    postId: string
+    postId: string,
+    isLike: boolean
 }
+
+export interface ApprovalStatus {
+    postId: string,
+    approved: ApprovalEnum
+}
+
+export enum ApprovalEnum {
+    NOT_APPROVED,
+    PENDING,
+    APPROVED
+}
+
 

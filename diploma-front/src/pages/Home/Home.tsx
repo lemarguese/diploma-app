@@ -1,8 +1,8 @@
 import './Home.css'
 import Post from "../../components/Post/Post";
 import SloganBack from '../../shared/images/home_background.jpg'
-import {useCallback, useEffect, useMemo, useState} from "react";
-import {IPost} from "../../utils/types/post.types";
+import {useCallback, useEffect, useState} from "react";
+import {EApprove, IPost} from "../../utils/types/post.types";
 import {getPosts, likeAPost} from "../../api/post/post";
 import {useNavigate} from "react-router";
 import {useAppSelector} from "../../hooks/useAppSelector";
@@ -18,11 +18,11 @@ const Home = () => {
     }, [])
 
     const fetchData = useCallback(() => {
-        getPosts().then(res => setPosts(res.data))
+        getPosts(EApprove.APPROVED).then(res => setPosts(res.data))
     }, [])
 
-    const like = useCallback(async (postId: string) => {
-        if (user._id) await likeAPost({userId: user._id, postId}).then(r => fetchData())
+    const like = useCallback(async (postId: string, like: boolean) => {
+        if (user._id) await likeAPost({userId: user._id, postId, isLike: like}).then(r => fetchData())
     }, [user])
 
     return <>
@@ -50,10 +50,12 @@ const Home = () => {
             <div className="home__popular__posts">
                 <h5 className="home__popular__posts__title">Популярные посты</h5>
                 <div className="home__posts">
-                    {posts.map(el => <Post key={el._id} {...el} viewed={el.viewed.length}
+                    {posts.length ? posts.map(el => <Post key={el._id} {...el} viewed={el.viewed.length}
                                            userLiked={!!el.liked.find(likedUser => likedUser._id === user._id)}
-                                           likePost={() => like(el._id)}
-                                           href={() => router(`/article/${el._id}`)}/>)}
+                                           likePost={() => like(el._id, true)}
+                                           dislikeAPost={() => like(el._id, false)}
+                                           href={() => router(`/article/${el._id}`)}/>)
+                    : <p className="home__not__found">Пока нет новых постов</p>}
                 </div>
             </div>
         </div>
