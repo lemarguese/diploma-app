@@ -24,6 +24,11 @@
     border-bottom: 1px solid #000;
 }
 
+.article__video {
+    height: 500px;
+    margin-bottom: 20px;
+}
+
 .article__main, .article__suggested__posts {
     padding-left: 55px;
 }

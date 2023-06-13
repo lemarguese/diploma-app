@@ -110,16 +110,23 @@ const Article = () => {
                     {/*</p>*/}
                 </div>
             </div>
-            <div className="article__suggested__posts">
-                <h4 className="article__suggested__title">Возможно, вам будет интересно:</h4>
-                <div className="article__suggested__list">
-                    {
-                        suggestedPosts.map(post => <SuggestPost navigate={() => router(`/article/${post._id}`)}
-                                                                image={ArticleImg} title={post.title}
-                                                                content={post.description}/>)
-                    }
-                </div>
+            <div className="article__video">
+                <iframe width="100%" height="100%"
+                        src={post.video}>
+                </iframe>
             </div>
+            {suggestedPosts.length ?
+                <div className="article__suggested__posts">
+                    <h4 className="article__suggested__title">Возможно, вам будет интересно:</h4>
+                    <div className="article__suggested__list">
+                        {
+                            suggestedPosts.map(post => <SuggestPost navigate={() => router(`/article/${post._id}`)}
+                                                                    image={ArticleImg} title={post.title}
+                                                                    content={post.description}/>)
+                        }
+                    </div>
+                </div>
+            : null}
         </div>
         <div className="article__comments">
             <h4 className="article__comment__title">Комментарии</h4>
