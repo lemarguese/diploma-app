@@ -1,8 +1,8 @@
 import Accordion from "../../components/Accordion/Accordion";
 import {useNavigate, useParams} from "react-router";
 import './Topics.css'
-import TopicParent from '../../shared/images/topic_parent.jpg'
-import TopicYoung from '../../shared/images/topic_youngster.jpg'
+import TopicParent from '../../shared/images/topic_parent.jpeg'
+import TopicYoung from '../../shared/images/topic_youngster.jpeg'
 import {useEffect, useMemo, useState} from "react";
 import {CategoryAudition, ICategory} from "../../utils/types/category.types";
 import {getTopics} from "../../api/category/category";

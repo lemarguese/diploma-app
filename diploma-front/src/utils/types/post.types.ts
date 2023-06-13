@@ -7,6 +7,7 @@ export interface IPost {
     description: string,
     photo: string,
     video: string,
+    category: string,
     createdBy: IUser,
     approved: boolean,
     liked: IUser[],

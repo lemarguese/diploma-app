@@ -1,7 +1,7 @@
 import {FC, useCallback, useEffect, useState} from "react";
 import {EApprove, IPost} from "../../utils/types/post.types";
 import {getPosts, setApproval} from "../../api/post/post";
-import ArticleImg from '../../shared/images/topic_youngster.jpg'
+import ArticleImg from '../../shared/images/topic_youngster.jpeg'
 import './Statuses.css'
 
 const Statuses: FC = () => {

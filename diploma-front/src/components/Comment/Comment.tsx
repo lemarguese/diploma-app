@@ -3,7 +3,7 @@ import RatePlusIcon from '../../shared/icons/comment_plus_icon.svg'
 import RateMinusIcon from '../../shared/icons/comment_minus_icon.svg'
 import ReplyIcon from '../../shared/icons/reply_icon.svg'
 import DeleteIcon from '../../shared/icons/delete_icon.svg'
-import Ava from '../../shared/images/topic_youngster.jpg'
+import Ava from '../../shared/images/topic_youngster.jpeg'
 import {FC} from "react";
 
 interface IProps {

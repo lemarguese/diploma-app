@@ -1,13 +1,13 @@
 import './Article.css'
 import BackIcon from '../../shared/icons/left_icon.svg'
-import ArticleImg from '../../shared/images/topic_youngster.jpg'
+import ArticleImg from '../../shared/images/topic_youngster.jpeg'
 import Comment from "../../components/Comment/Comment";
 // import {useAppSelector} from "../../hooks/useAppSelector";
 import SuggestPost from "../../components/SuggestPost/SuggestPost";
-import {useParams, useNavigate} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useCallback, useEffect, useState} from "react";
-import {getPostById} from "../../api/post/post";
-import {IPost} from "../../utils/types/post.types";
+import {getPostById, getPosts} from "../../api/post/post";
+import {EApprove, IPost} from "../../utils/types/post.types";
 import {comment, deleteComment, upvoteForComment} from "../../api/comment/comment";
 import {useAppSelector} from "../../hooks/useAppSelector";
 
@@ -15,23 +15,35 @@ const Article = () => {
 
     const {id} = useParams()
     const [post, setPost] = useState<IPost>()
+    const [suggestedPosts, setSuggestedPosts] = useState<IPost[]>([])
     const [commentText, setCommentText] = useState<string>('')
     const user = useAppSelector(state => state.user.user)
     const router = useNavigate();
 
     useEffect(() => {
-        if (id && user) fetchData()
+        if (id && user) {
+            fetchData()
+        }
     }, [id, user])
 
     useEffect(() => {
         if (post) {
-
+            getAllPosts()
         }
-    })
+    }, [post])
 
     const fetchData = useCallback(() => {
         if (id && user._id) getPostById(id, user._id).then(res => setPost(res.data))
     }, [id, user])
+
+    const getAllPosts = useCallback(() => {
+        if (post) {
+            getPosts(EApprove.APPROVED).then(posts => {
+                const filteredPosts = posts.data.filter(item => post.category === item.category && post._id !== item._id)
+                setSuggestedPosts(filteredPosts)
+            })
+        }
+    }, [post])
 
     const createComment = useCallback(async () => {
         if (user._id && post?._id) await comment({userId: user._id, postId: post?._id, commentText}).then(r => {
@@ -101,9 +113,11 @@ const Article = () => {
             <div className="article__suggested__posts">
                 <h4 className="article__suggested__title">Возможно, вам будет интересно:</h4>
                 <div className="article__suggested__list">
-                    <SuggestPost image={ArticleImg} title="Название статьи" content="Описание: 5-10 cлов"/>
-                    <SuggestPost image={ArticleImg} title="Название статьи" content="Описание: 5-10 cлов"/>
-                    <SuggestPost image={ArticleImg} title="Название статьи" content="Описание: 5-10 cлов"/>
+                    {
+                        suggestedPosts.map(post => <SuggestPost navigate={() => router(`/article/${post._id}`)}
+                                                                image={ArticleImg} title={post.title}
+                                                                content={post.description}/>)
+                    }
                 </div>
             </div>
         </div>
